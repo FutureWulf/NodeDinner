@@ -1,0 +1,23 @@
+{
+  "name": "nodedinner",
+  "version": "1.0.0",
+  "description": "NerdDinner done in Node, TDD style",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FutureWulf/NodeDinner.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FutureWulf/NodeDinner/issues"
+  },
+  "homepage": "https://github.com/FutureWulf/NodeDinner#readme",
+  "dependencies": {
+    "express": "^4.14.0",
+    "mocha": "^2.5.3"
+  }
+}
