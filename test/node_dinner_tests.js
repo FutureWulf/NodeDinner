@@ -11,5 +11,11 @@ describe('Node Dinner API', function () {
         .get('/')
         .expect(200, done);
     });
+
+    it('GET /Dinners returns status 200', function (done) {
+      request(app)
+        .get('/Dinners')
+        .expect(200, done);
+    });
   });
 });
