@@ -17,6 +17,11 @@ router
   .post('/', function (req, res) {
     var title = req.body.title;
     res.status(200).send(title + ' is saved');
+  })
+
+  .put('/:id', function (req, res) {
+    var title = req.body.title;
+    res.status(200).send(title + ' is updated');
   });
 
 module.exports = router;
