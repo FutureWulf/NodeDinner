@@ -26,6 +26,8 @@ router
 
   .put('/:id', function (req, res) {
     var title = req.body.title;
+    var id = req.params.id;
+    dinnersDb.UpdateDinner(id);
     res.status(200).send(title + ' is updated');
   })
 
