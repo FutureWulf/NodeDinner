@@ -8,6 +8,10 @@ router
 
   .get('/About', function (req, res) {
     res.sendStatus(200);
+  })
+
+  .get('/Contact', function (req, res) {
+    res.sendStatus(200);
   });
 
 module.exports = router;

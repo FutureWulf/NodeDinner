@@ -20,6 +20,12 @@ describe('Node Dinner API', function () {
         .get('/About')
         .expect(200, done);
     });
+
+    it('GET /Contact/ returns status 200', function (done) {
+      request(app)
+        .get('/Contact')
+        .expect(200, done);
+    });
   });
 
   describe('Dinners routing', function () {
