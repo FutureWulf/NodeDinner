@@ -82,6 +82,7 @@ describe('Node Dinner API', function () {
     sinon.spy(dinnerDb, 'FindDinnerById');
     sinon.spy(dinnerDb, 'CreateDinner');
     sinon.spy(dinnerDb, 'UpdateDinner');
+    sinon.spy(dinnerDb, 'DeleteDinner');
 
     it('GET /Dinners/ calls FindAllDinners on repository', function (done) {
       request(app)
@@ -110,6 +111,13 @@ describe('Node Dinner API', function () {
         .put('/Dinners/10')
         .send(dinner);
       assert(dinnerDb.UpdateDinner.called);
+      done();
+    });
+
+    it('DELETE /Dinners/:id calls DeleteDinner on repository', function (done) {
+      request(app)
+        .delete('Dinners/10');
+      assert(dinnerDb.DeleteDinner.called);
       done();
     });
   });

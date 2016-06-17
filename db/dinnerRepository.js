@@ -13,3 +13,7 @@ exports.CreateDinner = function (args, next) {
 exports.UpdateDinner = function (args, next) {
 
 };
+
+exports.DeleteDinner = function (args, next) {
+
+};

@@ -33,6 +33,7 @@ router
 
   .delete('/:id', function (req, res) {
     var id = req.params.id;
+    dinnersDb.DeleteDinner(id);
     res.status(200).send('Dinner id: ' + id + ' was deleted');
   });
 
