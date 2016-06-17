@@ -12,6 +12,11 @@ router
       id: id,
       message: 'Hello',
     });
+  })
+
+  .post('/', function (req, res) {
+    var title = req.body.title;
+    res.status(200).send(title + ' is saved');
   });
 
 module.exports = router;
