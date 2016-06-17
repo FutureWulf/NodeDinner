@@ -17,5 +17,12 @@ describe('Node Dinner API', function () {
         .get('/Dinners')
         .expect(200, done);
     });
+
+    it('GET /Dinners/:id returns JSON message with id', function (done) {
+      request(app)
+        .get('/Dinners/10')
+        .expect('Content-Type', /json/)
+        .expect(200, { id: 10, message: 'Hello' }, done);
+    });
   });
 });
