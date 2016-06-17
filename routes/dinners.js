@@ -20,6 +20,7 @@ router
 
   .post('/', function (req, res) {
     var title = req.body.title;
+    dinnersDb.CreateDinner();
     res.status(200).send(title + ' is saved');
   })
 

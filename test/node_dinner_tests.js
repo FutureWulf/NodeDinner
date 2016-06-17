@@ -5,6 +5,9 @@ var sinon = require('sinon');
 var dinnerDb = require('../db/dinnerRepository');
 
 describe('Node Dinner API', function () {
+
+  var dinner = { title: 'Test Dinner' };
+
   describe('Home routing', function () {
 
     before(function (done) {
@@ -31,8 +34,6 @@ describe('Node Dinner API', function () {
   });
 
   describe('Dinners routing', function () {
-
-    var dinner = { title: 'Test Dinner' };
 
     before(function (done) {
       done();
@@ -79,6 +80,7 @@ describe('Node Dinner API', function () {
 
     sinon.spy(dinnerDb, 'FindAllDinners');
     sinon.spy(dinnerDb, 'FindDinnerById');
+    sinon.spy(dinnerDb, 'CreateDinner');
 
     it('GET /Dinners/ calls FindAllDinners on repository', function (done) {
       request(app)
@@ -93,6 +95,15 @@ describe('Node Dinner API', function () {
         .get('/Dinners/10')
         .expect(200);
       assert(dinnerDb.FindDinnerById.called);
+      done();
+    });
+
+    it('POST /Dinners/ calls CreateDinner on repository', function (done) {
+      request(app)
+        .post('/Dinners')
+        .send(dinner)
+        .expect(200);
+      assert(dinnerDb.CreateDinner.called);
       done();
     });
   });
