@@ -78,12 +78,21 @@ describe('Node Dinner API', function () {
   describe('Dinner repository', function () {
 
     sinon.spy(dinnerDb, 'FindAllDinners');
+    sinon.spy(dinnerDb, 'FindDinnerById');
 
-    it('GET /Dinners/ calls FindAll on repository', function (done) {
+    it('GET /Dinners/ calls FindAllDinners on repository', function (done) {
       request(app)
         .get('/Dinners')
         .expect(200);
       assert(dinnerDb.FindAllDinners.called);
+      done();
+    });
+
+    it('GET /Dinners/:id calls FindDinnerById on repository', function (done) {
+      request(app)
+        .get('/Dinners/10')
+        .expect(200);
+      assert(dinnerDb.FindDinnerById.called);
       done();
     });
   });

@@ -11,6 +11,7 @@ router
 
   .get('/:id', function (req, res) {
     var id = req.params.id;
+    var result = dinnersDb.FindDinnerById(id);
     res.status(200).send({
       id: id,
       message: 'Hello',
