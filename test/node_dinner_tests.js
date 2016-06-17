@@ -45,14 +45,14 @@ describe('Node Dinner API', function () {
         .expect(200, done);
     });
 
-    it('GET /Dinners/:id returns JSON message with id', function (done) {
+    it('GET /Dinners/:id returns 200 with JSON message with id', function (done) {
       request(app)
         .get('/Dinners/10')
         .expect('Content-Type', /json/)
         .expect(200, { id: 10, message: 'Hello' }, done);
     });
 
-    it('POST /Dinners/ returns saved message', function (done) {
+    it('POST /Dinners/ returns 200 with saved message', function (done) {
       request(app)
         .post('/Dinners')
         .send(dinner)
@@ -60,7 +60,7 @@ describe('Node Dinner API', function () {
         .expect('Test Dinner is saved', done);
     });
 
-    it('PUT /Dinners/:id returns updated message', function (done) {
+    it('PUT /Dinners/:id returns 200 with updated message', function (done) {
       request(app)
         .put('/Dinners/10')
         .send(dinner)
@@ -68,7 +68,7 @@ describe('Node Dinner API', function () {
         .expect('Test Dinner is updated', done);
     });
 
-    it('DELETE /Dinners/:id returns deleted message', function (done) {
+    it('DELETE /Dinners/:id returns 200 with deleted message', function (done) {
       request(app)
         .delete('/Dinners/10')
         .expect(200)
