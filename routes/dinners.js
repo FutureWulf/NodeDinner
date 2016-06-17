@@ -22,6 +22,11 @@ router
   .put('/:id', function (req, res) {
     var title = req.body.title;
     res.status(200).send(title + ' is updated');
+  })
+
+  .delete('/:id', function (req, res) {
+    var id = req.params.id;
+    res.status(200).send('Dinner id: ' + id + ' was deleted');
   });
 
 module.exports = router;

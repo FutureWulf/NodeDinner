@@ -3,7 +3,7 @@ var app = require('../app');
 var request = require('supertest');
 
 describe('Node Dinner API', function () {
-  describe('Basic routing', function () {
+  describe('Basic Dinners routing', function () {
 
     var dinner = { title: 'Test Dinner' };
 
@@ -38,12 +38,19 @@ describe('Node Dinner API', function () {
         .expect('Test Dinner is saved', done);
     });
 
-    it('PUT /Dinners/ returns updated message', function (done) {
+    it('PUT /Dinners/:id returns updated message', function (done) {
       request(app)
         .put('/Dinners/10')
         .send(dinner)
         .expect(200)
         .expect('Test Dinner is updated', done);
+    });
+
+    it('DELETE /Dinners/:id returns deleted message', function (done) {
+      request(app)
+        .delete('/Dinners/10')
+        .expect(200)
+        .expect('Dinner id: 10 was deleted', done);
     });
   });
 });
