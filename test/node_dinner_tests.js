@@ -85,16 +85,14 @@ describe('Node Dinner API', function () {
 
     it('GET /Dinners/ calls FindAllDinners on repository', function (done) {
       request(app)
-        .get('/Dinners')
-        .expect(200);
+        .get('/Dinners');
       assert(dinnerDb.FindAllDinners.called);
       done();
     });
 
     it('GET /Dinners/:id calls FindDinnerById on repository', function (done) {
       request(app)
-        .get('/Dinners/10')
-        .expect(200);
+        .get('/Dinners/10');
       assert(dinnerDb.FindDinnerById.called);
       done();
     });
@@ -102,8 +100,7 @@ describe('Node Dinner API', function () {
     it('POST /Dinners/ calls CreateDinner on repository', function (done) {
       request(app)
         .post('/Dinners')
-        .send(dinner)
-        .expect(200);
+        .send(dinner);
       assert(dinnerDb.CreateDinner.called);
       done();
     });
@@ -111,8 +108,7 @@ describe('Node Dinner API', function () {
     it('PUT /Dinners/:id calls UpdateDinner on repository', function (done) {
       request(app)
         .put('/Dinners/10')
-        .send(dinner)
-        .expect(200);
+        .send(dinner);
       assert(dinnerDb.UpdateDinner.called);
       done();
     });
