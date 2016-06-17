@@ -1,6 +1,8 @@
 var assert = require('assert');
 var app = require('../app');
 var request = require('supertest');
+var sinon = require('sinon');
+var db = require('../db/repository');
 
 describe('Node Dinner API', function () {
   describe('Home routing', function () {
@@ -70,6 +72,19 @@ describe('Node Dinner API', function () {
         .delete('/Dinners/10')
         .expect(200)
         .expect('Dinner id: 10 was deleted', done);
+    });
+  });
+
+  describe('Dinner repository', function () {
+
+    sinon.spy(db, 'FindAll');
+
+    it('GET /Dinners/ calls FindAll on repository', function (done) {
+      request(app)
+        .get('/Dinners')
+        .expect(200);
+      assert(db.FindAll.called);
+      done();
     });
   });
 });

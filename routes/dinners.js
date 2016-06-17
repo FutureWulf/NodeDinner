@@ -1,8 +1,11 @@
 var express = require('express');
+var db = require('../db/repository');
+
 var router = express.Router();
 
 router
   .get('/', function (req, res) {
+    var result = db.FindAll();
     res.status(200).send('Hello Dinners!');
   })
 
