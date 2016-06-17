@@ -2,7 +2,7 @@ var assert = require('assert');
 var app = require('../app');
 var request = require('supertest');
 var sinon = require('sinon');
-var db = require('../db/repository');
+var dinnerDb = require('../db/dinnerRepository');
 
 describe('Node Dinner API', function () {
   describe('Home routing', function () {
@@ -77,13 +77,13 @@ describe('Node Dinner API', function () {
 
   describe('Dinner repository', function () {
 
-    sinon.spy(db, 'FindAll');
+    sinon.spy(dinnerDb, 'FindAllDinners');
 
     it('GET /Dinners/ calls FindAll on repository', function (done) {
       request(app)
         .get('/Dinners')
         .expect(200);
-      assert(db.FindAll.called);
+      assert(dinnerDb.FindAllDinners.called);
       done();
     });
   });

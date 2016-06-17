@@ -8,6 +8,6 @@
 
 //module.exports = repository;
 
-exports.FindAll = function (args, next) {
+exports.FindAllDinners = function (args, next) {
 
 };
