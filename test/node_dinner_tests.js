@@ -3,9 +3,7 @@ var app = require('../app');
 var request = require('supertest');
 
 describe('Node Dinner API', function () {
-  describe('Basic Dinners routing', function () {
-
-    var dinner = { title: 'Test Dinner' };
+  describe('Home routing', function () {
 
     before(function (done) {
       done();
@@ -15,6 +13,21 @@ describe('Node Dinner API', function () {
       request(app)
         .get('/')
         .expect(200, done);
+    });
+
+    it('GET /About/ returns status 200', function (done) {
+      request(app)
+        .get('/About')
+        .expect(200, done);
+    });
+  });
+
+  describe('Dinners routing', function () {
+
+    var dinner = { title: 'Test Dinner' };
+
+    before(function (done) {
+      done();
     });
 
     it('GET /Dinners/ returns status 200', function (done) {
