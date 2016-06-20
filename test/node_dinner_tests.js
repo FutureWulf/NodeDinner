@@ -6,7 +6,17 @@ var dinnerDb = require('../db/dinnerRepository');
 
 describe('Node Dinner API', function () {
 
-  var dinner = { title: 'Test Dinner' };
+  var dinner = {
+    title: 'A Test Dinner',
+    eventDate: '2016-10-31',
+    description: 'A dinner for testing purposes',
+    hostedBy: 'Mocha',
+    contactPhone: '555-TEST',
+    address: '123 Test St.',
+    city: 'Testville',
+    state: 'TN',
+    rsvp: [],
+  };
 
   describe('Home routing', function () {
 
@@ -60,7 +70,7 @@ describe('Node Dinner API', function () {
         .post('/Dinners')
         .send(dinner)
         .expect(200)
-        .expect('Test Dinner is saved', done);
+        .expect(dinner.title + ' is saved', done);
     });
 
     it('PUT /Dinners/:id returns 200 with updated message', function (done) {
@@ -68,7 +78,7 @@ describe('Node Dinner API', function () {
         .put('/Dinners/10')
         .send(dinner)
         .expect(200)
-        .expect('Test Dinner is updated', done);
+        .expect(dinner.title + ' is updated', done);
     });
 
     it('DELETE /Dinners/:id returns 200 with deleted message', function (done) {
