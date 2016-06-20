@@ -43,7 +43,11 @@ describe('Node Dinner API', function () {
       request(app)
         .get('/Dinners')
         .expect('Content-Type', /json/)
-        .expect(200, done);
+        .expect(200)
+        .end(function (err, res) {
+          if (err) return done(err);
+          done();
+        });
     });
 
     it('GET /Dinners/:id returns 200 with JSON message with id', function (done) {

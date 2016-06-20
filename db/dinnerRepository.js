@@ -1,9 +1,9 @@
 var mongoose = require('mongoose');
 var DinnerSchema = require('../models/dinner');
 
-exports.FindAllDinners = function () {
+exports.FindAllDinners = function (callback) {
   DinnerSchema.find({}, function (err, results) {
-    return results;
+    callback(results);
   });
 };
 
