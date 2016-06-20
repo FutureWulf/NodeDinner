@@ -1,5 +1,10 @@
-exports.FindAllDinners = function (args, next) {
+var mongoose = require('mongoose');
+var DinnerSchema = require('../models/dinner');
 
+exports.FindAllDinners = function () {
+  DinnerSchema.find({}, function (err, results) {
+    return results;
+  });
 };
 
 exports.FindDinnerById = function (args, next) {

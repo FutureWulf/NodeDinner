@@ -2,9 +2,9 @@
   "name": "nodedinner",
   "version": "1.0.0",
   "description": "NerdDinner done in Node, TDD style",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
@@ -21,7 +21,8 @@
     "express": "^4.14.0",
     "gulp": "^3.9.1",
     "gulp-nodemon": "^2.1.0",
-    "mocha": "^2.5.3"
+    "mocha": "^2.5.3",
+    "mongoose": "^4.5.1"
   },
   "devDependencies": {
     "supertest": "^1.2.0"

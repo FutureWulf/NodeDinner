@@ -6,7 +6,7 @@ var router = express.Router();
 router
   .get('/', function (req, res) {
     var result = dinnersDb.FindAllDinners();
-    res.status(200).send('Hello Dinners!');
+    res.status(200).send({ result: result });
   })
 
   .get('/:id', function (req, res) {

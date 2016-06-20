@@ -39,9 +39,10 @@ describe('Node Dinner API', function () {
       done();
     });
 
-    it('GET /Dinners/ returns status 200', function (done) {
+    it('GET /Dinners/ returns status 200 with JSON object', function (done) {
       request(app)
         .get('/Dinners')
+        .expect('Content-Type', /json/)
         .expect(200, done);
     });
 
@@ -76,7 +77,7 @@ describe('Node Dinner API', function () {
     });
   });
 
-  describe('Dinner repository', function () {
+  describe('Dinner methods use repository', function () {
 
     sinon.spy(dinnerDb, 'FindAllDinners');
     sinon.spy(dinnerDb, 'FindDinnerById');
