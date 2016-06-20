@@ -43,18 +43,16 @@ describe('Node Dinner API', function () {
       request(app)
         .get('/Dinners')
         .expect('Content-Type', /json/)
-        .expect(200)
-        .end(function (err, res) {
-          if (err) return done(err);
-          done();
-        });
+        .expect(200);
+      done();
     });
 
-    it('GET /Dinners/:id returns 200 with JSON message with id', function (done) {
+    it('GET /Dinners/:id returns 200 with correct dinner', function (done) {
       request(app)
-        .get('/Dinners/10')
+        .get('/Dinners/5745c51a9a1a11a90678e800')
         .expect('Content-Type', /json/)
-        .expect(200, { id: 10, message: 'Hello' }, done);
+        .expect(200, { title: 'Silly Dinner' });
+      done();
     });
 
     it('POST /Dinners/ returns 200 with saved message', function (done) {
@@ -89,21 +87,21 @@ describe('Node Dinner API', function () {
     sinon.spy(dinnerDb, 'UpdateDinner');
     sinon.spy(dinnerDb, 'DeleteDinner');
 
-    it('GET /Dinners/ calls FindAllDinners on repository', function (done) {
+    it('GET /Dinners/ calls FindAllDinners', function (done) {
       request(app)
-        .get('/Dinners');
-      assert(dinnerDb.FindAllDinners.called);
+        .get('/Dinners')
+        .expect(dinnerDb.FindAllDinners.called);
       done();
     });
 
-    it('GET /Dinners/:id calls FindDinnerById on repository', function (done) {
+    it('GET /Dinners/:id calls FindDinnerById with ID', function (done) {
       request(app)
-        .get('/Dinners/10');
-      assert(dinnerDb.FindDinnerById.called);
+        .get('/Dinners/10')
+        .expect(dinnerDb.FindDinnerById.calledWith(10));
       done();
     });
 
-    it('POST /Dinners/ calls CreateDinner on repository', function (done) {
+    it('POST /Dinners/ calls CreateDinner', function (done) {
       request(app)
         .post('/Dinners')
         .send(dinner);
@@ -111,7 +109,7 @@ describe('Node Dinner API', function () {
       done();
     });
 
-    it('PUT /Dinners/:id calls UpdateDinner on repository', function (done) {
+    it('PUT /Dinners/:id calls UpdateDinner', function (done) {
       request(app)
         .put('/Dinners/10')
         .send(dinner);
@@ -119,7 +117,7 @@ describe('Node Dinner API', function () {
       done();
     });
 
-    it('DELETE /Dinners/:id calls DeleteDinner on repository', function (done) {
+    it('DELETE /Dinners/:id calls DeleteDinner', function (done) {
       request(app)
         .delete('Dinners/10');
       assert(dinnerDb.DeleteDinner.called);

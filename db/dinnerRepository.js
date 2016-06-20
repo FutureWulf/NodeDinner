@@ -7,8 +7,10 @@ exports.FindAllDinners = function (callback) {
   });
 };
 
-exports.FindDinnerById = function (args, next) {
-
+exports.FindDinnerById = function (id, callback) {
+  DinnerSchema.findOne({ _id: id }, function (err, results) {
+    callback(results);
+  });
 };
 
 exports.CreateDinner = function (args, next) {
