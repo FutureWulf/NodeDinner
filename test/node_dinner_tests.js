@@ -100,14 +100,14 @@ describe('Node Dinner API', function () {
     it('GET /Dinners/ calls FindAllDinners', function (done) {
       request(app)
         .get('/Dinners')
-        .expect(dinnerDb.FindAllDinners.called);
+        .expect(dinnerDb.FindAllDinners.calledOnce);
       done();
     });
 
     it('GET /Dinners/:id calls FindDinnerById with ID', function (done) {
       request(app)
         .get('/Dinners/10')
-        .expect(dinnerDb.FindDinnerById.calledWith(10));
+        .expect(dinnerDb.FindDinnerById.calledOnce);
       done();
     });
 
@@ -115,7 +115,7 @@ describe('Node Dinner API', function () {
       request(app)
         .post('/Dinners')
         .send(dinner)
-        .expect(dinnerDb.CreateDinner.calledWith(dinner));
+        .expect(dinnerDb.CreateDinner.calledOnce);
       done();
     });
 
@@ -123,14 +123,14 @@ describe('Node Dinner API', function () {
       request(app)
         .put('/Dinners/10')
         .send(dinner)
-        .expect(dinnerDb.UpdateDinner.calledWith(dinner));
+        .expect(dinnerDb.UpdateDinner.calledOnce);
       done();
     });
 
     it('DELETE /Dinners/:id calls DeleteDinner', function (done) {
       request(app)
         .delete('Dinners/10')
-        .expect(dinnerDb.DeleteDinner.calledWith(10));
+        .expect(dinnerDb.DeleteDinner.calledOnce);
       done();
     });
   });
