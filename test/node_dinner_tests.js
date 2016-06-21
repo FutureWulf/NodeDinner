@@ -65,27 +65,27 @@ describe('Node Dinner API', function () {
       done();
     });
 
-    it('POST /Dinners/ returns 200 with saved message', function (done) {
+    it('POST /Dinners/ returns 201 with saved message', function (done) {
       request(app)
         .post('/Dinners')
         .send(dinner)
-        .expect(200)
+        .expect(201)
         .expect(dinner.title + ' is saved', done);
     });
 
-    it('PUT /Dinners/:id returns 200 with updated message', function (done) {
+    it('PUT /Dinners/:id returns 201 with updated message', function (done) {
       request(app)
         .put('/Dinners/10')
         .send(dinner)
-        .expect(200)
+        .expect(201)
         .expect(dinner.title + ' is updated', done);
     });
 
-    it('DELETE /Dinners/:id returns 200 with deleted message', function (done) {
+    it('DELETE /Dinners/:id returns 204', function (done) {
       request(app)
         .delete('/Dinners/10')
-        .expect(200)
-        .expect('Dinner id: 10 was deleted', done);
+        .expect(204);
+      done();
     });
   });
 
@@ -114,23 +114,23 @@ describe('Node Dinner API', function () {
     it('POST /Dinners/ calls CreateDinner', function (done) {
       request(app)
         .post('/Dinners')
-        .send(dinner);
-      assert(dinnerDb.CreateDinner.called);
+        .send(dinner)
+        .expect(dinnerDb.CreateDinner.calledWith(dinner));
       done();
     });
 
     it('PUT /Dinners/:id calls UpdateDinner', function (done) {
       request(app)
         .put('/Dinners/10')
-        .send(dinner);
-      assert(dinnerDb.UpdateDinner.called);
+        .send(dinner)
+        .expect(dinnerDb.UpdateDinner.calledWith(dinner));
       done();
     });
 
     it('DELETE /Dinners/:id calls DeleteDinner', function (done) {
       request(app)
-        .delete('Dinners/10');
-      assert(dinnerDb.DeleteDinner.called);
+        .delete('Dinners/10')
+        .expect(dinnerDb.DeleteDinner.calledWith(10));
       done();
     });
   });

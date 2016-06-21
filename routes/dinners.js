@@ -20,20 +20,20 @@ router
   .post('/', function (req, res) {
     var title = req.body.title;
     dinnersDb.CreateDinner();
-    res.status(200).send(title + ' is saved');
+    res.status(201).send(title + ' is saved');
   })
 
   .put('/:id', function (req, res) {
     var title = req.body.title;
     var id = req.params.id;
     dinnersDb.UpdateDinner(id);
-    res.status(200).send(title + ' is updated');
+    res.status(201).send(title + ' is updated');
   })
 
   .delete('/:id', function (req, res) {
     var id = req.params.id;
     dinnersDb.DeleteDinner(id);
-    res.status(200).send('Dinner id: ' + id + ' was deleted');
+    res.status(204).send('Dinner id: ' + id + ' was deleted');
   });
 
 module.exports = router;
