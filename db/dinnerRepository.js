@@ -13,7 +13,7 @@ exports.FindDinnerById = function (id, callback) {
   });
 };
 
-exports.CreateDinner = function (dinner, callback) {
+exports.CreateDinner = function (args, next) {
 
 };
 

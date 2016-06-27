@@ -100,38 +100,48 @@ describe('Node Dinner API', function () {
     it('GET /Dinners/ calls FindAllDinners', function (done) {
       request(app)
         .get('/Dinners')
-        .expect(dinnerDb.FindAllDinners.calledOnce);
-      done();
+        .expect(function (res) {
+          assert(dinnerDb.FindAllDinners.calledOnce);
+        })
+        .end(done);
     });
 
     it('GET /Dinners/:id calls FindDinnerById with ID', function (done) {
       request(app)
         .get('/Dinners/10')
-        .expect(dinnerDb.FindDinnerById.calledOnce);
-      done();
+        .expect(function (res) {
+          assert(dinnerDb.FindDinnerById.calledOnce);
+        })
+        .end(done);
     });
 
     it('POST /Dinners/ calls CreateDinner', function (done) {
       request(app)
         .post('/Dinners')
         .send(dinner)
-        .expect(dinnerDb.CreateDinner.calledOnce);
-      done();
+        .expect(function (res) {
+          assert(dinnerDb.CreateDinner.calledOnce);
+        })
+        .end(done);
     });
 
     it('PUT /Dinners/:id calls UpdateDinner', function (done) {
       request(app)
         .put('/Dinners/10')
         .send(dinner)
-        .expect(dinnerDb.UpdateDinner.calledOnce);
-      done();
+        .expect(function (res) {
+          assert(dinnerDb.UpdateDinner.calledOnce);
+        })
+        .end(done);
     });
 
     it('DELETE /Dinners/:id calls DeleteDinner', function (done) {
       request(app)
         .delete('Dinners/10')
-        .expect(dinnerDb.DeleteDinner.calledOnce);
-      done();
+        .expect(function (res) {
+          assert(dinnerDb.DeleteDinner.calledOnce);
+        })
+        .end(done);
     });
   });
 });
