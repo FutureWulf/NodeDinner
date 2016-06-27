@@ -105,48 +105,43 @@ describe('Node Dinner API', function () {
     it('GET /Dinners/ calls FindAllDinners', function (done) {
       request(app)
         .get('/Dinners')
-        .expect(function (res) {
-          assert(dinnerDb.FindAllDinners.calledOnce);
-        })
-        .end(done);
+        .end();
+      assert(dinnerDb.FindAllDinners.calledOnce);
+      done();
     });
 
     it('GET /Dinners/:id calls FindDinnerById with ID', function (done) {
       request(app)
         .get('/Dinners/10')
-        .expect(function (res) {
-          assert(dinnerDb.FindDinnerById.calledOnce);
-        })
-        .end(done);
+        .end();
+      assert(dinnerDb.FindDinnerById.calledOnce);
+      done();
     });
 
     it('POST /Dinners/ calls CreateDinner', function (done) {
       request(app)
         .post('/Dinners')
         .send(dinner)
-        .expect(function (res) {
-          assert(dinnerDb.CreateDinner.calledOnce);
-        })
-        .end(done);
+        .end();
+      assert(dinnerDb.CreateDinner.calledOnce);
+      done();
     });
 
     it('PUT /Dinners/:id calls UpdateDinner', function (done) {
       request(app)
         .put('/Dinners/10')
         .send(dinner)
-        .expect(function (res) {
-          assert(dinnerDb.UpdateDinner.calledOnce);
-        })
-        .end(done);
+        .end();
+      assert(dinnerDb.UpdateDinner.calledOnce);
+      done();
     });
 
     it('DELETE /Dinners/:id calls DeleteDinner', function (done) {
       request(app)
         .delete('Dinners/10')
-        .expect(function (res) {
-          assert(dinnerDb.DeleteDinner.calledOnce);
-        })
-        .end(done);
+        .end();
+      assert(dinnerDb.DeleteDinner.calledOnce);
+      done();
     });
   });
 });
