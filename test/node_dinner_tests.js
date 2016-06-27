@@ -53,16 +53,19 @@ describe('Node Dinner API', function () {
       request(app)
         .get('/Dinners')
         .expect('Content-Type', /json/)
-        .expect(200);
-      done();
+        .expect(200)
+        .end(done);
     });
 
     it('GET /Dinners/:id returns 200 with correct dinner', function (done) {
       request(app)
         .get('/Dinners/5745c51a9a1a11a90678e800')
         .expect('Content-Type', /json/)
-        .expect(200, { title: 'Silly Dinner' });
-      done();
+        .expect(200)
+        .expect(function (res) {
+          res.body.title = 'Silly Dinner';
+        })
+        .end(done);
     });
 
     it('POST /Dinners/ returns 201 with saved message', function (done) {
@@ -70,7 +73,8 @@ describe('Node Dinner API', function () {
         .post('/Dinners')
         .send(dinner)
         .expect(201)
-        .expect(dinner.title + ' is saved', done);
+        .expect(dinner.title + ' is saved')
+        .end(done);
     });
 
     it('PUT /Dinners/:id returns 201 with updated message', function (done) {
@@ -78,14 +82,15 @@ describe('Node Dinner API', function () {
         .put('/Dinners/10')
         .send(dinner)
         .expect(201)
-        .expect(dinner.title + ' is updated', done);
+        .expect(dinner.title + ' is updated')
+        .end(done);
     });
 
     it('DELETE /Dinners/:id returns 204', function (done) {
       request(app)
         .delete('/Dinners/10')
-        .expect(204);
-      done();
+        .expect(204)
+        .end(done);
     });
   });
 
