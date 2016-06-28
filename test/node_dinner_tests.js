@@ -55,7 +55,7 @@ describe('Node Dinner API', function () {
         .end(done);
     });
 
-    it('POST /Dinners/ returns 201 with saved message', function (done) {
+    it('POST /Dinners/ returns 201 with id of saved object', function (done) {
       request(app)
         .post('/Dinners')
         .send(dinner)
@@ -127,6 +127,16 @@ describe('Node Dinner API', function () {
         .delete('Dinners/10')
         .end();
       assert(dinnerDb.DeleteDinner.calledOnce);
+      done();
+    });
+  });
+
+  describe('CRUD Functionality', function () {
+    it.skip('Creating a valid dinner saves the dinner', function (done) {
+      request(app)
+        .post('/Dinners')
+        .send(dinner)
+        .end();
       done();
     });
   });
