@@ -38,12 +38,21 @@ describe('Node Dinner API', function () {
   });
 
   describe('Dinners Routing', function () {
+    before(function () {
+      sinon.spy(dinnersDb, 'FindAllDinners');
+      sinon.spy(dinnersDb, 'FindDinnerById');
+      sinon.spy(dinnersDb, 'CreateDinner');
+      sinon.spy(dinnersDb, 'UpdateDinner');
+      sinon.spy(dinnersDb, 'DeleteDinner');
+    });
 
-    sinon.spy(dinnersDb, 'FindAllDinners');
-    sinon.spy(dinnersDb, 'FindDinnerById');
-    sinon.spy(dinnersDb, 'CreateDinner');
-    sinon.spy(dinnersDb, 'UpdateDinner');
-    sinon.spy(dinnersDb, 'DeleteDinner');
+    after(function () {
+      dinnersDb.FindAllDinners.restore();
+      dinnersDb.FindDinnerById.restore();
+      dinnersDb.CreateDinner.restore();
+      dinnersDb.UpdateDinner.restore();
+      dinnersDb.DeleteDinner.restore();
+    });
 
     it('GET /Dinners/ returns status 200 and calls FindAllDinners', function (done) {
       request(app)
