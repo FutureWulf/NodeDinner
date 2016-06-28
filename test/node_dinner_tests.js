@@ -2,7 +2,7 @@ var assert = require('assert');
 var app = require('../app');
 var request = require('supertest');
 var sinon = require('sinon');
-var dinnerDb = require('../db/dinnerRepository');
+var dinnersDb = require('../db/dinnerRepository');
 
 describe('Node Dinner API', function () {
   var dinner = {
@@ -17,7 +17,7 @@ describe('Node Dinner API', function () {
     rsvp: [],
   };
 
-  describe('Routing', function () {
+  describe('Basic Routing', function () {
     it('GET / returns status 200', function (done) {
       request(app)
         .get('/')
@@ -35,103 +35,75 @@ describe('Node Dinner API', function () {
         .get('/Contact')
         .expect(200, done);
     });
+  });
 
-    it('GET /Dinners/ returns status 200 with JSON object', function (done) {
+  describe('Dinners Routing', function () {
+
+    sinon.spy(dinnersDb, 'FindAllDinners');
+    sinon.spy(dinnersDb, 'FindDinnerById');
+    sinon.spy(dinnersDb, 'CreateDinner');
+    sinon.spy(dinnersDb, 'UpdateDinner');
+    sinon.spy(dinnersDb, 'DeleteDinner');
+
+    it('GET /Dinners/ returns status 200 and calls FindAllDinners', function (done) {
       request(app)
         .get('/Dinners')
-        .expect('Content-Type', /json/)
         .expect(200)
-        .end(done);
+        .end(function () {
+          assert(dinnersDb.FindAllDinners.calledOnce);
+        });
+
+      done();
     });
 
-    it('GET /Dinners/:id returns 200 with correct dinner', function (done) {
+    it('GET /Dinners/:id returns 200 and calls FindDinnerById', function (done) {
       request(app)
-        .get('/Dinners/5745c51a9a1a11a90678e800')
-        .expect('Content-Type', /json/)
+        .get('/Dinners/10')
         .expect(200)
-        .expect(function (res) {
-          res.body.title = 'Silly Dinner';
-        })
-        .end(done);
+        .end(function () {
+          assert(dinnersDb.FindDinnerById.calledOnce);
+        });
+
+      done();
     });
 
-    it('POST /Dinners/ returns 201 with id of saved object', function (done) {
+    it('POST /Dinners/ returns 201 and calls CreateDinner', function (done) {
       request(app)
         .post('/Dinners')
         .send(dinner)
         .expect(201)
-        .expect(dinner.title + ' is saved')
-        .end(done);
+        .end(function () {
+          assert(dinnersDb.CreateDinner.calledOnce);
+        });
+
+      done();
     });
 
-    it('PUT /Dinners/:id returns 201 with updated message', function (done) {
+    it('PUT /Dinners/:id returns 201 and calls UpdateDinner', function (done) {
       request(app)
         .put('/Dinners/10')
         .send(dinner)
         .expect(201)
-        .expect(dinner.title + ' is updated')
-        .end(done);
+        .end(function () {
+          assert(dinnersDb.UpdateDinner.calledOnce);
+        });
+
+      done();
     });
 
-    it('DELETE /Dinners/:id returns 204', function (done) {
+    it('DELETE /Dinners/:id returns 204 and calls DeleteDinner', function (done) {
       request(app)
         .delete('/Dinners/10')
         .expect(204)
-        .end(done);
-    });
-  });
+        .end(function () {
+          assert(dinnersDb.DeleteDinner.calledOnce);
+        });
 
-  describe('Dinner methods use repository', function () {
-    sinon.spy(dinnerDb, 'FindAllDinners');
-    sinon.spy(dinnerDb, 'FindDinnerById');
-    sinon.spy(dinnerDb, 'CreateDinner');
-    sinon.spy(dinnerDb, 'UpdateDinner');
-    sinon.spy(dinnerDb, 'DeleteDinner');
-
-    it('GET /Dinners/ calls FindAllDinners', function (done) {
-      request(app)
-        .get('/Dinners')
-        .end();
-      assert(dinnerDb.FindAllDinners.calledOnce);
-      done();
-    });
-
-    it('GET /Dinners/:id calls FindDinnerById with ID', function (done) {
-      request(app)
-        .get('/Dinners/10')
-        .end();
-      assert(dinnerDb.FindDinnerById.calledOnce);
-      done();
-    });
-
-    it('POST /Dinners/ calls CreateDinner', function (done) {
-      request(app)
-        .post('/Dinners')
-        .send(dinner)
-        .end();
-      assert(dinnerDb.CreateDinner.calledOnce);
-      done();
-    });
-
-    it('PUT /Dinners/:id calls UpdateDinner', function (done) {
-      request(app)
-        .put('/Dinners/10')
-        .send(dinner)
-        .end();
-      assert(dinnerDb.UpdateDinner.calledOnce);
-      done();
-    });
-
-    it('DELETE /Dinners/:id calls DeleteDinner', function (done) {
-      request(app)
-        .delete('Dinners/10')
-        .end();
-      assert(dinnerDb.DeleteDinner.calledOnce);
       done();
     });
   });
 
-  describe('CRUD Functionality', function () {
+  describe('CRUD Operations', function () {
     it.skip('Creating a valid dinner saves the dinner', function (done) {
       request(app)
         .post('/Dinners')

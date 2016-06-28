@@ -18,9 +18,10 @@ router
   })
 
   .post('/', function (req, res) {
-    var title = req.body.title;
-    dinnersDb.CreateDinner();
-    res.status(201).send(title + ' is saved');
+    var dinner = req.body;
+    dinnersDb.CreateDinner(dinner, function (result) {
+      res.status(201).send(result);
+    });
   })
 
   .put('/:id', function (req, res) {
