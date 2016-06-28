@@ -81,7 +81,7 @@ describe('Node Dinner API', function () {
         .expect(201)
         .end(function (err) {
           assert(dinnersDb.CreateDinner.calledOnce);
-          done();
+          done(err);
         });
     });
 
@@ -108,7 +108,7 @@ describe('Node Dinner API', function () {
   });
 
   describe('CRUD Operations', function () {
-    it('Creating a valid dinner saves the dinner', function (done) {
+    it.skip('Creating a valid dinner saves the dinner', function (done) {
       request(app)
         .post('/Dinners')
         .send(dinner)
