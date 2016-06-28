@@ -28,7 +28,6 @@ exports.CreateDinner = function (req, callback) {
 
   dinner.save(function (err, results) {
     if (err) console.log(err);
-    else console.log('Saved : ', results);
     callback(results);
   });
 };

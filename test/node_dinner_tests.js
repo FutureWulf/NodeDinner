@@ -58,22 +58,20 @@ describe('Node Dinner API', function () {
       request(app)
         .get('/Dinners')
         .expect(200)
-        .end(function () {
+        .end(function (err) {
           assert(dinnersDb.FindAllDinners.calledOnce);
+          done(err);
         });
-
-      done();
     });
 
     it('GET /Dinners/:id returns 200 and calls FindDinnerById', function (done) {
       request(app)
         .get('/Dinners/10')
         .expect(200)
-        .end(function () {
+        .end(function (err) {
           assert(dinnersDb.FindDinnerById.calledOnce);
+          done(err);
         });
-
-      done();
     });
 
     it('POST /Dinners/ returns 201 and calls CreateDinner', function (done) {
@@ -81,11 +79,10 @@ describe('Node Dinner API', function () {
         .post('/Dinners')
         .send(dinner)
         .expect(201)
-        .end(function () {
+        .end(function (err) {
           assert(dinnersDb.CreateDinner.calledOnce);
+          done();
         });
-
-      done();
     });
 
     it('PUT /Dinners/:id returns 201 and calls UpdateDinner', function (done) {
@@ -93,31 +90,35 @@ describe('Node Dinner API', function () {
         .put('/Dinners/10')
         .send(dinner)
         .expect(201)
-        .end(function () {
+        .end(function (err) {
           assert(dinnersDb.UpdateDinner.calledOnce);
+          done(err);
         });
-
-      done();
     });
 
     it('DELETE /Dinners/:id returns 204 and calls DeleteDinner', function (done) {
       request(app)
         .delete('/Dinners/10')
         .expect(204)
-        .end(function () {
+        .end(function (err) {
           assert(dinnersDb.DeleteDinner.calledOnce);
+          done(err);
         });
-
-      done();
     });
   });
 
   describe('CRUD Operations', function () {
-    it.skip('Creating a valid dinner saves the dinner', function (done) {
+    it('Creating a valid dinner saves the dinner', function (done) {
       request(app)
         .post('/Dinners')
         .send(dinner)
-        .end();
+        .end(function (res) {
+          var id = res._id;
+          dinnersDb.FindDinnerById(id, function () {
+            assert(1 === 3);
+          });
+        });
+
       done();
     });
   });
