@@ -5,7 +5,6 @@ var sinon = require('sinon');
 var dinnerDb = require('../db/dinnerRepository');
 
 describe('Node Dinner API', function () {
-
   var dinner = {
     title: 'A Test Dinner',
     eventDate: '2016-10-31',
@@ -18,12 +17,7 @@ describe('Node Dinner API', function () {
     rsvp: [],
   };
 
-  describe('Home routing', function () {
-
-    before(function (done) {
-      done();
-    });
-
+  describe('Routing', function () {
     it('GET / returns status 200', function (done) {
       request(app)
         .get('/')
@@ -40,13 +34,6 @@ describe('Node Dinner API', function () {
       request(app)
         .get('/Contact')
         .expect(200, done);
-    });
-  });
-
-  describe('Dinners routing', function () {
-
-    before(function (done) {
-      done();
     });
 
     it('GET /Dinners/ returns status 200 with JSON object', function (done) {
@@ -95,7 +82,6 @@ describe('Node Dinner API', function () {
   });
 
   describe('Dinner methods use repository', function () {
-
     sinon.spy(dinnerDb, 'FindAllDinners');
     sinon.spy(dinnerDb, 'FindDinnerById');
     sinon.spy(dinnerDb, 'CreateDinner');
