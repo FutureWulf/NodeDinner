@@ -7,14 +7,14 @@ var mongoose = require('mongoose');
 
 describe('Node Dinner API', function () {
 
-  before(function (done) {
+  beforeEach(function (done) {
     mongoose.connection.db.dropDatabase(function (err) {
       if (err) throw err;
       done();
     });
   });
 
-  after(function (done) {
+  afterEach(function (done) {
     mongoose.connection.db.dropDatabase(function (err) {
       if (err) throw err;
       done();
@@ -105,7 +105,7 @@ describe('Node Dinner API', function () {
 
     it('PUT /Dinners/:id returns 201 and calls UpdateDinner', function (done) {
       request(app)
-        .put('/Dinners/10')
+        .put('/Dinners/41224d776a326fb40f000001')
         .send(dinner)
         .expect(201)
         .end(function (err) {
@@ -116,7 +116,7 @@ describe('Node Dinner API', function () {
 
     it('DELETE /Dinners/:id returns 204 and calls DeleteDinner', function (done) {
       request(app)
-        .delete('/Dinners/10')
+        .delete('/Dinners/41224d776a326fb40f000001')
         .expect(204)
         .end(function (err) {
           assert(dinnersDb.DeleteDinner.calledOnce);
@@ -126,5 +126,16 @@ describe('Node Dinner API', function () {
   });
 
   describe('CRUD Operations', function () {
+    it('Creating a dinner saves the dinner', function (done) {
+      request(app)
+        .post('/Dinners')
+        .send(dinner)
+        .expect(function (res) {
+          dinnersDb.FindDinnerById(res.body._id, function (result) {
+            assert.equal(result._id, res.body._id);
+          });
+        })
+        .end(done);
+    });
   });
 });
