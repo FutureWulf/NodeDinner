@@ -9,14 +9,14 @@ describe('Node Dinner API', function () {
 
   before(function (done) {
     mongoose.connection.db.dropDatabase(function (err) {
-      if (err) console.log(err);
+      if (err) throw err;
       done();
     });
   });
 
   after(function (done) {
     mongoose.connection.db.dropDatabase(function (err) {
-      if (err) console.log(err);
+      if (err) throw err;
       done();
     });
   });
@@ -126,17 +126,5 @@ describe('Node Dinner API', function () {
   });
 
   describe('CRUD Operations', function () {
-    it('Creating a valid dinner saves the dinner', function (done) {
-      request(app)
-        .post('/Dinners')
-        .send(dinner)
-        .end(function (res) {
-          var id = res._id;
-          dinnersDb.FindDinnerById(id, function () {
-            assert(1 === 3);
-            done();
-          });
-        });
-    });
   });
 });
