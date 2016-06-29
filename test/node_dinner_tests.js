@@ -3,8 +3,24 @@ var app = require('../app');
 var request = require('supertest');
 var sinon = require('sinon');
 var dinnersDb = require('../db/dinnerRepository');
+var mongoose = require('mongoose');
 
 describe('Node Dinner API', function () {
+
+  before(function (done) {
+    mongoose.connection.db.dropDatabase(function (err) {
+      if (err) console.log(err);
+      done();
+    });
+  });
+
+  after(function (done) {
+    mongoose.connection.db.dropDatabase(function (err) {
+      if (err) console.log(err);
+      done();
+    });
+  });
+
   var dinner = {
     title: 'A Test Dinner',
     eventDate: '2016-10-31',
@@ -38,20 +54,22 @@ describe('Node Dinner API', function () {
   });
 
   describe('Dinners Routing', function () {
-    before(function () {
+    before(function (done) {
       sinon.spy(dinnersDb, 'FindAllDinners');
       sinon.spy(dinnersDb, 'FindDinnerById');
       sinon.spy(dinnersDb, 'CreateDinner');
       sinon.spy(dinnersDb, 'UpdateDinner');
       sinon.spy(dinnersDb, 'DeleteDinner');
+      done();
     });
 
-    after(function () {
+    after(function (done) {
       dinnersDb.FindAllDinners.restore();
       dinnersDb.FindDinnerById.restore();
       dinnersDb.CreateDinner.restore();
       dinnersDb.UpdateDinner.restore();
       dinnersDb.DeleteDinner.restore();
+      done();
     });
 
     it('GET /Dinners/ returns status 200 and calls FindAllDinners', function (done) {
@@ -108,7 +126,7 @@ describe('Node Dinner API', function () {
   });
 
   describe('CRUD Operations', function () {
-    it.skip('Creating a valid dinner saves the dinner', function (done) {
+    it('Creating a valid dinner saves the dinner', function (done) {
       request(app)
         .post('/Dinners')
         .send(dinner)
@@ -116,10 +134,9 @@ describe('Node Dinner API', function () {
           var id = res._id;
           dinnersDb.FindDinnerById(id, function () {
             assert(1 === 3);
+            done();
           });
         });
-
-      done();
     });
   });
 });
