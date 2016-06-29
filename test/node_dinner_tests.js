@@ -126,5 +126,19 @@ describe('Node Dinner API', function () {
   });
 
   describe('CRUD Operations', function () {
+    it('Create dinner saves the dinner', function (done) {
+      request(app)
+        .post('/Dinners')
+        .send(dinner)
+        .expect(savedDinnerIsFound)
+        .end();
+
+      function savedDinnerIsFound(res) {
+        var id = res.body._id;
+        dinnersDb.FindDinnerById(function (id, result) {
+          assert(result._id === id);
+        });
+      }
+    });
   });
 });

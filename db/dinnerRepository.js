@@ -3,12 +3,14 @@ var DinnerSchema = require('../models/dinner');
 
 exports.FindAllDinners = function (callback) {
   DinnerSchema.find({}, function (err, results) {
+    if (err) throw err;
     callback(results);
   });
 };
 
 exports.FindDinnerById = function (id, callback) {
   DinnerSchema.findOne({ _id: id }, function (err, results) {
+    if (err) throw err;
     callback(results);
   });
 };
