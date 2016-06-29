@@ -84,7 +84,7 @@ describe('Node Dinner API', function () {
 
     it('GET /Dinners/:id returns 200 and calls FindDinnerById', function (done) {
       request(app)
-        .get('/Dinners/10')
+        .get('/Dinners/41224d776a326fb40f000001')
         .expect(200)
         .end(function (err) {
           assert(dinnersDb.FindDinnerById.calledOnce);
@@ -126,19 +126,5 @@ describe('Node Dinner API', function () {
   });
 
   describe('CRUD Operations', function () {
-    it('Create dinner saves the dinner', function (done) {
-      request(app)
-        .post('/Dinners')
-        .send(dinner)
-        .expect(savedDinnerIsFound)
-        .end();
-
-      function savedDinnerIsFound(res) {
-        var id = res.body._id;
-        dinnersDb.FindDinnerById(function (id, result) {
-          assert(result._id === id);
-        });
-      }
-    });
   });
 });
