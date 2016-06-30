@@ -4,17 +4,18 @@ var request = require('supertest');
 var sinon = require('sinon');
 var dinnersDb = require('../db/dinnerRepository');
 var mongoose = require('mongoose');
+var DinnerSchema = require('../models/dinner');
 
 describe('Node Dinner API', function () {
 
-  beforeEach(function (done) {
+  before(function (done) {
     mongoose.connection.db.dropDatabase(function (err) {
       if (err) throw err;
       done();
     });
   });
 
-  afterEach(function (done) {
+  after(function (done) {
     mongoose.connection.db.dropDatabase(function (err) {
       if (err) throw err;
       done();
@@ -125,8 +126,8 @@ describe('Node Dinner API', function () {
     });
   });
 
-  describe('CRUD Operations', function () {
-    it('Creating a dinner saves the dinner', function (done) {
+  describe('Creating, Updating and Deleting', function () {
+    it('Creating a dinner saves the dinner to DB', function (done) {
       request(app)
         .post('/Dinners')
         .send(dinner)
@@ -136,6 +137,10 @@ describe('Node Dinner API', function () {
           });
         })
         .end(done);
+    });
+
+    it.skip('Updating a dinner updates the document in DB', function (done) {
+      done();
     });
   });
 });
