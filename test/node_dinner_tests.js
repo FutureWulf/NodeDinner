@@ -132,13 +132,15 @@ describe('Node Dinner API', function () {
         .post('/Dinners')
         .send(dinner)
         .expect(201)
-        .end(function (error, response) {
-          if (error) throw error;
-          dinnersDb.FindDinnerById(response.body._id, function (result) {
-            assert.equal(result._id, response.body._id);
-            done();
-          });
+        .end(findResponseInDB);
+
+      function findResponseInDB(error, response) {
+        if (error) throw error;
+        dinnersDb.FindDinnerById(response.body._id, function (result) {
+          assert.equal(result._id, response.body._id);
+          done();
         });
+      }
     });
 
     it.skip('Updating a dinner updates the document in DB', function (done) {
