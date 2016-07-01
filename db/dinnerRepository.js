@@ -15,6 +15,13 @@ exports.FindDinnerById = function (id, callback) {
   });
 };
 
+exports.GetOne = function (query, callback) {
+  DinnerSchema.findOne(query, function (err, results) {
+    if (err) throw err;
+    callback(results);
+  });
+};
+
 exports.CreateDinner = function (req, callback) {
   var dinner = new DinnerSchema({
     title: req.title,
@@ -34,7 +41,7 @@ exports.CreateDinner = function (req, callback) {
   });
 };
 
-exports.UpdateDinner = function (args, next) {
+exports.UpdateDinner = function (req, callback) {
 
 };
 

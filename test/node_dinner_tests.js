@@ -143,8 +143,25 @@ describe('Node Dinner API', function () {
       }
     });
 
-    it.skip('Updating a dinner updates the document in DB', function (done) {
-      done();
+    it('Updating a dinner updates the document in DB', function (done) {
+      dinnersDb.GetOne({ title: 'A Test Dinner' }, function (result) {
+        var dinner = result;
+        var id = dinner._id;
+        dinner.title = 'A Silly Dinner';
+
+        request(app)
+          .put('/Dinners/' + id)
+          .send(dinner)
+          .expect(201)
+          .end(function (error, response) {
+            if (error) throw error;
+            console.log(response);
+            dinnersDb.FindDinnerById(response.body._id, function (result) {
+              assert.equal(result.title, 'A Silly Dinner');
+              done();
+            });
+          });
+      });
     });
   });
 });
