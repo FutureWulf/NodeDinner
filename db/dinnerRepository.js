@@ -8,13 +8,6 @@ exports.FindAllDinners = function (callback) {
   });
 };
 
-exports.FindDinnerById = function (id, callback) {
-  DinnerSchema.findOne({ _id: id }, function (err, results) {
-    if (err) throw err;
-    callback(results);
-  });
-};
-
 exports.GetOne = function (query, callback) {
   DinnerSchema.findOne(query, function (err, results) {
     if (err) throw err;

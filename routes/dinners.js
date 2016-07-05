@@ -12,7 +12,7 @@ router
 
   .get('/:id', function (req, res) {
     var id = req.params.id;
-    dinnersDb.FindDinnerById(id, function (result) {
+    dinnersDb.GetOne({ _id: id }, function (result) {
       res.status(200).send(result);
     });
   })

@@ -57,7 +57,7 @@ describe('Node Dinner API', function () {
   describe('Dinners Routing', function () {
     before(function (done) {
       sinon.spy(dinnersDb, 'FindAllDinners');
-      sinon.spy(dinnersDb, 'FindDinnerById');
+      sinon.spy(dinnersDb, 'GetOne');
       sinon.spy(dinnersDb, 'CreateDinner');
       sinon.spy(dinnersDb, 'UpdateDinner');
       sinon.spy(dinnersDb, 'DeleteDinner');
@@ -66,7 +66,7 @@ describe('Node Dinner API', function () {
 
     after(function (done) {
       dinnersDb.FindAllDinners.restore();
-      dinnersDb.FindDinnerById.restore();
+      dinnersDb.GetOne.restore();
       dinnersDb.CreateDinner.restore();
       dinnersDb.UpdateDinner.restore();
       dinnersDb.DeleteDinner.restore();
@@ -88,7 +88,7 @@ describe('Node Dinner API', function () {
         .get('/Dinners/41224d776a326fb40f000001')
         .expect(200)
         .end(function (err) {
-          assert(dinnersDb.FindDinnerById.calledOnce);
+          assert(dinnersDb.GetOne.calledOnce);
           done(err);
         });
     });
@@ -136,7 +136,7 @@ describe('Node Dinner API', function () {
 
       function findResponseInDB(error, response) {
         if (error) throw error;
-        dinnersDb.FindDinnerById(response.body._id, function (result) {
+        dinnersDb.GetOne({ _id: response.body._id }, function (result) {
           assert.equal(result._id, response.body._id);
           done();
         });
@@ -155,7 +155,7 @@ describe('Node Dinner API', function () {
           .expect(201)
           .end(function (error, response) {
             if (error) throw error;
-            dinnersDb.FindDinnerById(response.body._id, function (result) {
+            dinnersDb.GetOne({ _id: response.body._id }, function (result) {
               assert.equal(result.title, 'A Silly Dinner');
               done();
             });
