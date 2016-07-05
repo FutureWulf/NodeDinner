@@ -153,7 +153,7 @@ describe('Node Dinner API', function () {
 
       function findResponseInDB(error, response) {
         if (error) throw error;
-        dinnersDb.GetOne({ _id: response.body._id }, function assertIdsAreEqual(result) {
+        dinnersDb.GetOne({ _id: response.body._id }, function (result) {
           assert.equal(result._id, response.body._id);
           done();
         });
