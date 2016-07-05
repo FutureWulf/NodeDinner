@@ -37,19 +37,21 @@ exports.CreateDinner = function (req, callback) {
 exports.UpdateDinner = function (req, callback) {
   DinnerSchema.findOne({ _id: req._id }, function (err, dinner) {
     if (err) throw err;
-    dinner.title = req.title || dinner.title;
-    dinner.eventDate = req.eventDate || dinner.eventDate;
-    dinner.description = req.description || dinner.description;
-    dinner.hostedBy = req.hostedBy || dinner.hostedBy;
-    dinner.contactPhone = req.contactPhone || dinner.contactPhone;
-    dinner.address = req.address || dinner.address;
-    dinner.city = req.city || dinner.city;
-    dinner.state = req.state || dinner.state;
+    if (!dinner) { callback(dinner); } else {
+      dinner.title = req.title || dinner.title;
+      dinner.eventDate = req.eventDate || dinner.eventDate;
+      dinner.description = req.description || dinner.description;
+      dinner.hostedBy = req.hostedBy || dinner.hostedBy;
+      dinner.contactPhone = req.contactPhone || dinner.contactPhone;
+      dinner.address = req.address || dinner.address;
+      dinner.city = req.city || dinner.city;
+      dinner.state = req.state || dinner.state;
 
-    dinner.save(function (err, results) {
-      if (err) throw err;
-      callback(results);
-    });
+      dinner.save(function (err, results) {
+        if (err) throw err;
+        callback(results);
+      });
+    }
   });
 };
 

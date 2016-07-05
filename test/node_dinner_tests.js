@@ -104,15 +104,19 @@ describe('Node Dinner API', function () {
         });
     });
 
-    it.skip('PUT /Dinners/:id returns 201 and calls UpdateDinner', function (done) {
-      request(app)
-        .put('/Dinners/41224d776a326fb40f000001')
-        .send(dinner)
-        .expect(201)
-        .end(function (err) {
-          assert(dinnersDb.UpdateDinner.calledOnce);
-          done(err);
-        });
+    it('PUT /Dinners/:id returns 201 and calls UpdateDinner', function (done) {
+      dinnersDb.GetOne({ title: 'A Test Dinner' }, callUpdateOnID);
+
+      function callUpdateOnID(result) {
+        request(app)
+          .put('/Dinners/' + result._id)
+          .send(dinner)
+          .expect(201)
+          .end(function (err) {
+            assert(dinnersDb.UpdateDinner.calledOnce);
+            done(err);
+          });
+      }
     });
 
     it('DELETE /Dinners/:id returns 204 and calls DeleteDinner', function (done) {
@@ -136,7 +140,7 @@ describe('Node Dinner API', function () {
 
       function findResponseInDB(error, response) {
         if (error) throw error;
-        dinnersDb.GetOne({ _id: response.body._id }, function (result) {
+        dinnersDb.GetOne({ _id: response.body._id }, function assertIdsAreEqual(result) {
           assert.equal(result._id, response.body._id);
           done();
         });
@@ -153,13 +157,15 @@ describe('Node Dinner API', function () {
           .put('/Dinners/' + id)
           .send(dinner)
           .expect(201)
-          .end(function (error, response) {
-            if (error) throw error;
-            dinnersDb.GetOne({ _id: response.body._id }, function (result) {
-              assert.equal(result.title, 'A Silly Dinner');
-              done();
-            });
+          .end(findResponseInDB);
+
+        function findResponseInDB(error, response) {
+          if (error) throw error;
+          dinnersDb.GetOne({ _id: response.body._id }, function (result) {
+            assert.equal(result.title, 'A Silly Dinner');
+            done();
           });
+        }
       });
     });
   });
