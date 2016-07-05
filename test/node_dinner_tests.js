@@ -56,7 +56,7 @@ describe('Node Dinner API', function () {
 
   describe('Dinners Routing', function () {
     before(function (done) {
-      sinon.spy(dinnersDb, 'FindAllDinners');
+      sinon.spy(dinnersDb, 'GetAll');
       sinon.spy(dinnersDb, 'GetOne');
       sinon.spy(dinnersDb, 'CreateDinner');
       sinon.spy(dinnersDb, 'UpdateDinner');
@@ -65,7 +65,7 @@ describe('Node Dinner API', function () {
     });
 
     after(function (done) {
-      dinnersDb.FindAllDinners.restore();
+      dinnersDb.GetAll.restore();
       dinnersDb.GetOne.restore();
       dinnersDb.CreateDinner.restore();
       dinnersDb.UpdateDinner.restore();
@@ -78,7 +78,7 @@ describe('Node Dinner API', function () {
         .get('/Dinners')
         .expect(200)
         .end(function (err) {
-          assert(dinnersDb.FindAllDinners.calledOnce);
+          assert(dinnersDb.GetAll.calledOnce);
           done(err);
         });
     });

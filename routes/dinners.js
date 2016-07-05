@@ -5,7 +5,7 @@ var router = express.Router();
 
 router
   .get('/', function (req, res) {
-    dinnersDb.FindAllDinners(function (result) {
+    dinnersDb.GetAll(function (result) {
       res.status(200).send(result);
     });
   })

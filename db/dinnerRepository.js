@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var DinnerSchema = require('../models/dinner');
 
-exports.FindAllDinners = function (callback) {
+exports.GetAll = function (callback) {
   DinnerSchema.find({}, function (err, results) {
     if (err) throw err;
     callback(results);
@@ -29,7 +29,7 @@ exports.CreateDinner = function (req, callback) {
   });
 
   dinner.save(function (err, results) {
-    if (err) console.log(err);
+    if (err) throw err;
     callback(results);
   });
 };
