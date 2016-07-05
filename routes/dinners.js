@@ -25,10 +25,10 @@ router
   })
 
   .put('/:id', function (req, res) {
-    var title = req.body.title;
-    var id = req.params.id;
-    dinnersDb.UpdateDinner(id);
-    res.status(201).send(title + ' is updated');
+    var dinner = req.body;
+    dinnersDb.UpdateDinner(dinner, function (result) {
+      res.status(201).send(result);
+    });
   })
 
   .delete('/:id', function (req, res) {
