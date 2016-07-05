@@ -12,9 +12,11 @@ router
 
   .get('/:id', function (req, res) {
     var id = req.params.id;
-    dinnersDb.GetOne({ _id: id }, function (result) {
-      res.status(200).send(result);
-    });
+    if (!isMongoId(id)) { res.status(404).send('Dinner not found'); } else {
+      dinnersDb.GetOne({ _id: id }, function (result) {
+        res.status(200).send(result);
+      });
+    }
   })
 
   .post('/', function (req, res) {
@@ -26,9 +28,12 @@ router
 
   .put('/:id', function (req, res) {
     var dinner = req.body;
-    dinnersDb.UpdateDinner(dinner, function (result) {
-      res.status(201).send(result);
-    });
+    var id = req.params.id;
+    if (!isMongoId(id)) { res.status(404).send('Dinner not found'); } else {
+      dinnersDb.UpdateDinner(dinner, function (result) {
+        res.status(201).send(result);
+      });
+    }
   })
 
   .delete('/:id', function (req, res) {
@@ -36,5 +41,10 @@ router
     dinnersDb.DeleteDinner(id);
     res.status(204).send('Dinner id: ' + id + ' was deleted');
   });
+
+function isMongoId(id) {
+  var regex = new RegExp(/^[0-9a-fA-F]{24}$/);
+  if (regex.test(id) === true) { return true; } else { return false; }
+}
 
 module.exports = router;

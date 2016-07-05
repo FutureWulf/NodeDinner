@@ -52,6 +52,12 @@ describe('Node Dinner API', function () {
         .get('/Contact')
         .expect(200, done);
     });
+
+    it('GET bad path returns 404', function (done) {
+      request(app)
+        .get('/Nothing')
+        .expect(404, done);
+    });
   });
 
   describe('Dinners Routing', function () {
@@ -91,6 +97,13 @@ describe('Node Dinner API', function () {
           assert(dinnersDb.GetOne.calledOnce);
           done(err);
         });
+    });
+
+    it('GET /Dinners/:id returns 404 with bad ID', function (done) {
+      request(app)
+        .get('/Dinners/FourtyTwo')
+        .expect(404)
+        .end(done);
     });
 
     it('POST /Dinners/ returns 201 and calls CreateDinner', function (done) {
