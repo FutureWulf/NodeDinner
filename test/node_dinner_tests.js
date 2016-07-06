@@ -34,32 +34,6 @@ describe('Node Dinner API', function () {
     rsvp: [],
   };
 
-  describe('Basic Routing', function () {
-    it('GET / returns status 200', function (done) {
-      request(app)
-        .get('/')
-        .expect(200, done);
-    });
-
-    it('GET /About/ returns status 200', function (done) {
-      request(app)
-        .get('/About')
-        .expect(200, done);
-    });
-
-    it('GET /Contact/ returns status 200', function (done) {
-      request(app)
-        .get('/Contact')
-        .expect(200, done);
-    });
-
-    it('GET bad path returns 404', function (done) {
-      request(app)
-        .get('/Nothing')
-        .expect(404, done);
-    });
-  });
-
   describe('Dinners Routing', function () {
     before(function (done) {
       sinon.spy(dinnersDb, 'GetAll');
@@ -99,10 +73,10 @@ describe('Node Dinner API', function () {
         });
     });
 
-    it('GET /Dinners/:id returns 404 with bad ID', function (done) {
+    it('GET /Dinners/:id with bad ID returns 400', function (done) {
       request(app)
         .get('/Dinners/FourtyTwo')
-        .expect(404)
+        .expect(400)
         .end(done);
     });
 
