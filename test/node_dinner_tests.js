@@ -161,7 +161,9 @@ describe('Node Dinner API', function () {
     });
 
     it('Updating a dinner updates the document in DB', function (done) {
-      dinnersDb.GetOne({ title: 'A Test Dinner' }, function (result) {
+      dinnersDb.GetOne({ title: 'A Test Dinner' }, updateDocument);
+
+      function updateDocument(result) {
         var dinner = result;
         var id = dinner._id;
         dinner.title = 'A Silly Dinner';
@@ -179,7 +181,7 @@ describe('Node Dinner API', function () {
             done();
           });
         }
-      });
+      }
     });
   });
 });
