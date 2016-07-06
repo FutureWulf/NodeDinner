@@ -2,7 +2,7 @@ var assert = require('assert');
 var app = require('../app');
 var request = require('supertest');
 
-describe('Basic API Routes and Codes', function () {
+describe('Basic Routes and Codes', function () {
   it('GET / returns status 200', function (done) {
     request(app)
       .get('/')
