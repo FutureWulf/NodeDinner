@@ -39,9 +39,9 @@ describe('Creating, Updating and Deleting', function () {
       .post('/Dinners')
       .send(dinner)
       .expect(201)
-      .end(findResponseInDB);
+      .end(checkDbforCreatedDocument);
 
-    function findResponseInDB(error, response) {
+    function checkDbforCreatedDocument(error, response) {
       if (error) throw error;
       dinnersDb.GetOne({ _id: response.body._id }, function (result) {
         assert.equal(result._id, response.body._id);
@@ -62,12 +62,33 @@ describe('Creating, Updating and Deleting', function () {
         .put('/Dinners/' + id)
         .send(dinner)
         .expect(201)
-        .end(findResponseInDB);
+        .end(checkDbforUpdatedDocument);
 
-      function findResponseInDB(error, response) {
+      function checkDbforUpdatedDocument(error, response) {
         if (error) throw error;
         dinnersDb.GetOne({ _id: response.body._id }, function (result) {
           assert.equal(result.title, 'A Silly Dinner');
+          done();
+        });
+      }
+    }
+  });
+
+  it('Deleting a dinner deletes the document in DB', function (done) {
+    dinnersDb.GetOne({ title: 'A Silly Dinner' }, deleteDocument);
+
+    function deleteDocument(result) {
+      var id = result._id;
+
+      request(app)
+        .delete('/Dinners/' + id)
+        .expect(204)
+        .end(checkDbForDeletedDocument);
+
+      function checkDbForDeletedDocument(error, result) {
+        if (error) throw error;
+        dinnersDb.GetOne({ _id: id }, function (result) {
+          assert.equal(result, null);
           done();
         });
       }
