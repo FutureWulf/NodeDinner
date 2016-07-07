@@ -12,7 +12,7 @@ router
 
   .get('/:id', function (req, res) {
     var id = req.params.id;
-    if (!isMongoId(id)) { res.status(400).send('Dinner not found'); } else {
+    if (!isMongoId(id)) { res.status(400).send('Not a valid ID'); } else {
       dinnersDb.GetOne({ _id: id }, function (result) {
         res.status(200).send(result);
       });
@@ -29,7 +29,7 @@ router
   .put('/:id', function (req, res) {
     var dinner = req.body;
     var id = req.params.id;
-    if (!isMongoId(id)) { res.status(400).send('Dinner not found'); } else {
+    if (!isMongoId(id)) { res.status(400).send('Not a valid ID'); } else {
       dinnersDb.UpdateDinner(dinner, function (result) {
         res.status(201).send(result);
       });

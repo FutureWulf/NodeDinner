@@ -46,7 +46,7 @@ exports.UpdateDinner = function (req, callback) {
       dinner.address = req.address || dinner.address;
       dinner.city = req.city || dinner.city;
       dinner.state = req.state || dinner.state;
-
+      dinner.rsvp = req.rsvp || dinner.rsvp;
       dinner.save(function (err, results) {
         if (err) throw err;
         callback(results);
