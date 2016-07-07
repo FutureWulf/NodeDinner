@@ -20,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Routes
 app.use('/', require('./routes/home'));
 app.use('/Dinners', require('./routes/dinners'));
+app.use('/RSVP', require('./routes/rsvp'));
 
 // Listen
 app.listen(config.port, function () {
