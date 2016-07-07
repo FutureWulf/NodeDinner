@@ -38,8 +38,11 @@ router
 
   .delete('/:id', function (req, res) {
     var id = req.params.id;
-    dinnersDb.DeleteDinner(id);
-    res.status(204).send('Dinner id: ' + id + ' was deleted');
+    if (!isMongoId(id)) { res.status(400).send('Not a valid ID'); } else {
+      dinnersDb.DeleteDinner(id, function (result) {
+        res.status(204).send(result);
+      });
+    }
   });
 
 function isMongoId(id) {

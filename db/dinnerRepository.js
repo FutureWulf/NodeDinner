@@ -56,6 +56,14 @@ exports.UpdateDinner = function (req, callback) {
   });
 };
 
-exports.DeleteDinner = function (args, next) {
-
+exports.DeleteDinner = function (id, callback) {
+  DinnerSchema.findOne({ _id: id }, function (err, dinner) {
+    if (err) throw err;
+    if (!dinner) { callback(dinner); } else {
+      dinner.remove(function (err, results) {
+        if (err) throw err;
+        callback(results);
+      });
+    }
+  });
 };

@@ -10,6 +10,7 @@ var env = 'TEST';
 
 // Mongo
 var uri = config.db[env];
+mongoose.Promise = global.Promise;
 mongoose.connect(uri);
 
 // Using
