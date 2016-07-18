@@ -27,7 +27,7 @@ describe('RSVP Routes and Codes', function () {
       if (err) throw err;
 
       request(app)
-        .post('/Dinner/')
+        .post('/Dinners/')
         .send(dinner)
         .end(function (err) {
           if (err) throw err;
