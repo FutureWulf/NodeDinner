@@ -6,7 +6,7 @@ var dinnersDb = require('../db/dinnerRepository');
 var mongoose = require('mongoose');
 var DinnerSchema = require('../models/dinner');
 
-describe('RSVP Routes and Codes', function () {
+describe('RSVP Routes and Functionality', function () {
 
   var dinner = {
     title: 'A Test Dinner',
@@ -56,6 +56,23 @@ describe('RSVP Routes and Codes', function () {
         .end(function (err) {
           assert(dinnersDb.UpdateDinner.calledOnce);
           done(err);
+        });
+    }
+  });
+
+  it.skip('RSVP for a dinner adds user to list', function (done) {
+    dinnersDb.GetOne({ title: 'A Test Dinner' }, rsvpForDinner);
+
+    function rsvpForDinner(dinnerToUpdate) {
+      request(app)
+        .put('/RSVP/' + dinnerToUpdate._id)
+        .send(dinner)
+        .expect(201)
+        .end(function (err) {
+          dinnersDb.GetOne({ _id: dinnerToUpdate._id }, function (updatedDinner) {
+            assert.equal(updatedDinner.rsvp, 'PlaceHolder');
+            done(err);
+          });
         });
     }
   });
