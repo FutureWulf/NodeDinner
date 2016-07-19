@@ -60,7 +60,7 @@ describe('RSVP Routes and Functionality', function () {
     }
   });
 
-  it.skip('RSVP for a dinner adds user to list', function (done) {
+  it('RSVP for a dinner adds user to list', function (done) {
     dinnersDb.GetOne({ title: 'A Test Dinner' }, rsvpForDinner);
 
     function rsvpForDinner(dinnerToUpdate) {
@@ -70,7 +70,7 @@ describe('RSVP Routes and Functionality', function () {
         .expect(201)
         .end(function (err) {
           dinnersDb.GetOne({ _id: dinnerToUpdate._id }, function (updatedDinner) {
-            assert.equal(updatedDinner.rsvp, 'PlaceHolder');
+            assert.equal(updatedDinner.rsvp[0], 'BrianG');
             done(err);
           });
         });
