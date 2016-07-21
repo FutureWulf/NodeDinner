@@ -1,6 +1,9 @@
 var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var cookieParser = require('cookie-parser');
+var passport = require('passport');
+var session = require('express-session');
 var config = require('./config/config');
 
 var app = express();
@@ -13,9 +16,17 @@ var uri = config.db[env];
 mongoose.Promise = global.Promise;
 mongoose.connect(uri);
 
-// Using
+// General Using Statements
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+
+//Session and Passport
+app.use(session({
+  secret: 'unittestscantmeltsteelbeams',
+  resave: false,
+  saveUninitialized: false, }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Routes
 app.use('/', require('./routes/home'));
