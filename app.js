@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 //Session and Passport
 app.use(session({
-  secret: 'unittestscantmeltsteelbeams',
+  secret: 'memesmeltsteelbeams',
   resave: false,
   saveUninitialized: false, }));
 app.use(passport.initialize());
