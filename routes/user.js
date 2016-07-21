@@ -8,7 +8,7 @@ module.exports = function (router, passport) {
     })
 
     .post('/signup', passport.authenticate('local-signup', {
-      successRedirect: '/proflie',
+      successRedirect: '/profile',
       failureRedirect: '/signup',
       failureFlash: true,
     }))
