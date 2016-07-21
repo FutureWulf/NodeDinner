@@ -25,8 +25,9 @@ module.exports = function (passport) {
     // User.findOne wont fire unless data is sent back
     process.nextTick(function () {
 
-      User.findOne({ 'local.username': username }, function (err, user) {
+      User.findOne({ 'local.username': username }, validateUser);
 
+      function validateUser(err, user) {
         if (err)
           return done(err);
 
@@ -45,7 +46,7 @@ module.exports = function (passport) {
             return done(null, newUser);
           });
         }
-      });
+      }
     });
   }));
 };
