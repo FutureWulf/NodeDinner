@@ -6,7 +6,7 @@ var config = require('./config/config');
 var app = express();
 
 // Environment
-var env = 'TEST';
+var env = config.env;
 
 // Mongo
 var uri = config.db[env];
