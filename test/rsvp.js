@@ -60,7 +60,7 @@ describe('RSVP Routes and Functionality', function () {
     }
   });
 
-  it('RSVP for a dinner adds user to list', function (done) {
+  it.skip('RSVP for a dinner adds user to list', function (done) {
     dinnersDb.GetOne({ title: 'A Test Dinner' }, rsvpForDinner);
 
     function rsvpForDinner(dinnerToUpdate) {
