@@ -1,5 +1,5 @@
 var assert = require('assert');
-var app = require('../app');
+var app = require('../../app');
 var request = require('supertest');
 
 describe('Basic Routes and Codes', function () {

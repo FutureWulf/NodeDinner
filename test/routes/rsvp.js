@@ -1,10 +1,10 @@
 var assert = require('assert');
-var app = require('../app');
+var app = require('../../app');
 var request = require('supertest');
 var sinon = require('sinon');
-var dinnersDb = require('../db/dinnerRepository');
+var dinnersDb = require('../../db/dinnerRepository');
 var mongoose = require('mongoose');
-var DinnerSchema = require('../models/dinner');
+var DinnerSchema = require('../../models/dinner');
 
 describe('RSVP Routes and Functionality', function () {
 
