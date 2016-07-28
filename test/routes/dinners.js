@@ -6,7 +6,7 @@ var dinnersDb = require('../../db/dinnerRepository');
 var mongoose = require('mongoose');
 var DinnerSchema = require('../../models/dinner');
 
-describe('Dinner Routes and Codes', function () {
+describe('Dinner Controller', function () {
 
   before(function (done) {
     mongoose.connection.db.dropDatabase(function (err) {

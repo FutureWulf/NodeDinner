@@ -2,7 +2,7 @@ var assert = require('assert');
 var app = require('../../app');
 var request = require('supertest');
 
-describe('Basic Routes and Codes', function () {
+describe('Home Controller', function () {
   it('GET / returns status 200', function (done) {
     request(app)
       .get('/')
