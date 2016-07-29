@@ -55,23 +55,37 @@ describe('Dinners Repository', function () {
     });
   });
 
-  it('GetOne returns one dinner', function (done) {
-    dinnersDb.GetOne({ title: 'Another Test Dinner' }, function (results) {
+  it('GetOne returns the correct dinner', function (done) {
+    dinnersDb.GetOne({ title: 'Another Test Dinner' }, compareResults);
+
+    function compareResults(results) {
       assert.equal(results.title, 'Another Test Dinner');
       done();
-    });
+    }
   });
 
   it('CreateDinner creates the dinner', function (done) {
     dinner.title = 'CreateDinner Made This';
-    dinnersDb.CreateDinner(dinner, function (results) {
+    dinnersDb.CreateDinner(dinner, compareResults);
+
+    function compareResults(results) {
       assert.equal(results.title, dinner.title);
       done();
-    });
+    }
   });
 
-  it.skip('UpdateDinner updates the dinner', function (done) {
-    done();
+  it('UpdateDinner updates the dinner', function (done) {
+    dinnersDb.GetOne({ title: 'CreateDinner Made This' }, updateSelectedDinner);
+
+    function updateSelectedDinner(dinnerToUpdate) {
+      dinnerToUpdate.title = 'UpdateDinner Updated This';
+      dinnersDb.UpdateDinner(dinnerToUpdate, compareResults);
+    }
+
+    function compareResults(result) {
+      assert.equal(result.title, 'UpdateDinner Updated This');
+      done();
+    }
   });
 
   it.skip('DeleteDinner deletes the dinner', function (done) {
