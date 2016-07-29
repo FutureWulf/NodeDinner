@@ -55,8 +55,11 @@ describe('Dinners Repository', function () {
     });
   });
 
-  it.skip('GetOne returns one dinner', function (done) {
-    done();
+  it('GetOne returns one dinner', function (done) {
+    dinnersDb.GetOne({ title: 'Another Test Dinner' }, function (results) {
+      assert.equal(results.title, 'Another Test Dinner');
+      done();
+    });
   });
 
   it.skip('CreateDinner creates the dinner', function (done) {
