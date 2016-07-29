@@ -88,7 +88,20 @@ describe('Dinners Repository', function () {
     }
   });
 
-  it.skip('DeleteDinner deletes the dinner', function (done) {
-    done();
+  it('DeleteDinner deletes the dinner', function (done) {
+    dinnersDb.GetOne({ title: 'UpdateDinner Updated This' }, deleteSelectedDinner);
+
+    function deleteSelectedDinner(dinnerToDelete) {
+      dinnersDb.DeleteDinner(dinnerToDelete._id, lookupResponse);
+    }
+
+    function lookupResponse(response) {
+      dinnersDb.GetOne({ title: response.title }, assertDinnerIsNull);
+    }
+
+    function assertDinnerIsNull(result) {
+      assert.equal(result, null);
+      done();
+    }
   });
 });
