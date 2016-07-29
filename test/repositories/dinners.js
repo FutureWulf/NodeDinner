@@ -62,8 +62,12 @@ describe('Dinners Repository', function () {
     });
   });
 
-  it.skip('CreateDinner creates the dinner', function (done) {
-    done();
+  it('CreateDinner creates the dinner', function (done) {
+    dinner.title = 'CreateDinner Made This';
+    dinnersDb.CreateDinner(dinner, function (results) {
+      assert.equal(results.title, dinner.title);
+      done();
+    });
   });
 
   it.skip('UpdateDinner updates the dinner', function (done) {
