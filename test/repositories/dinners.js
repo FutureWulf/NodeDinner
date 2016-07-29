@@ -29,7 +29,16 @@ describe('Dinners Repository', function () {
       .post('/Dinners')
       .send(dinner)
       .expect(201)
-      .end(done);
+      .end(insertSecondDinner);
+
+    function insertSecondDinner(err) {
+      dinner.title = 'Another Test Dinner';
+      request(app)
+        .post('/Dinners')
+        .send(dinner)
+        .expect(201)
+        .end(done);
+    }
   });
 
   after(function (done) {
@@ -40,22 +49,25 @@ describe('Dinners Repository', function () {
   });
 
   it('GetAll returns all dinners', function (done) {
+    dinnersDb.GetAll(function (results) {
+      assert.equal(results.length, 2);
+      done();
+    });
+  });
+
+  it.skip('GetOne returns one dinner', function (done) {
     done();
   });
 
-  it('GetOne returns one dinner', function (done) {
+  it.skip('CreateDinner creates the dinner', function (done) {
     done();
   });
 
-  it('CreateDinner creates the dinner', function (done) {
+  it.skip('UpdateDinner updates the dinner', function (done) {
     done();
   });
 
-  it('UpdateDinner updates the dinner', function (done) {
-    done();
-  });
-
-  it('DeleteDinner deletes the dinner', function (done) {
+  it.skip('DeleteDinner deletes the dinner', function (done) {
     done();
   });
 });
