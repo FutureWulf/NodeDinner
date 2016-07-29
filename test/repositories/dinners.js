@@ -6,21 +6,7 @@ var dinnersDb = require('../../db/dinnerRepository');
 var mongoose = require('mongoose');
 var DinnerSchema = require('../../models/dinner');
 
-describe('Creating, Updating and Deleting', function () {
-
-  before(function (done) {
-    mongoose.connection.db.dropDatabase(function (err) {
-      if (err) throw err;
-      done();
-    });
-  });
-
-  after(function (done) {
-    mongoose.connection.db.dropDatabase(function (err) {
-      if (err) throw err;
-      done();
-    });
-  });
+describe('Dinners Repository', function () {
 
   var dinner = {
     title: 'A Test Dinner',
@@ -34,64 +20,42 @@ describe('Creating, Updating and Deleting', function () {
     rsvp: [],
   };
 
-  it('Creating a dinner saves the dinner to DB', function (done) {
+  before(function (done) {
+    mongoose.connection.db.dropDatabase(function (err) {
+      if (err) throw err;
+    });
+
     request(app)
       .post('/Dinners')
       .send(dinner)
       .expect(201)
-      .end(checkDbforCreatedDocument);
-
-    function checkDbforCreatedDocument(error, response) {
-      if (error) throw error;
-      dinnersDb.GetOne({ _id: response.body._id }, function (result) {
-        assert.equal(result._id, response.body._id);
-        done();
-      });
-    }
+      .end(done);
   });
 
-  it('Updating a dinner updates the document in DB', function (done) {
-    dinnersDb.GetOne({ title: 'A Test Dinner' }, updateDocument);
-
-    function updateDocument(result) {
-      var dinner = result;
-      var id = dinner._id;
-      dinner.title = 'A Silly Dinner';
-
-      request(app)
-        .put('/Dinners/' + id)
-        .send(dinner)
-        .expect(201)
-        .end(checkDbforUpdatedDocument);
-
-      function checkDbforUpdatedDocument(error, response) {
-        if (error) throw error;
-        dinnersDb.GetOne({ _id: response.body._id }, function (result) {
-          assert.equal(result.title, 'A Silly Dinner');
-          done();
-        });
-      }
-    }
+  after(function (done) {
+    mongoose.connection.db.dropDatabase(function (err) {
+      if (err) throw err;
+      done(err);
+    });
   });
 
-  it('Deleting a dinner deletes the document in DB', function (done) {
-    dinnersDb.GetOne({ title: 'A Silly Dinner' }, deleteDocument);
+  it('GetAll returns all dinners', function (done) {
+    done();
+  });
 
-    function deleteDocument(result) {
-      var id = result._id;
+  it('GetOne returns one dinner', function (done) {
+    done();
+  });
 
-      request(app)
-        .delete('/Dinners/' + id)
-        .expect(204)
-        .end(checkDbForDeletedDocument);
+  it('CreateDinner creates the dinner', function (done) {
+    done();
+  });
 
-      function checkDbForDeletedDocument(error, result) {
-        if (error) throw error;
-        dinnersDb.GetOne({ _id: id }, function (result) {
-          assert.equal(result, null);
-          done();
-        });
-      }
-    }
+  it('UpdateDinner updates the dinner', function (done) {
+    done();
+  });
+
+  it('DeleteDinner deletes the dinner', function (done) {
+    done();
   });
 });
