@@ -6,4 +6,5 @@ describe('Routes and Response Codes', function () {
 
 describe('Repository Functionality', function () {
   require('./repositories/dinners');
+  require('./repositories/user');
 });
