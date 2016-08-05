@@ -16,13 +16,12 @@ describe('Users Respository', function () {
   before(function (done) {
     mongoose.connection.db.dropDatabase(function (err) {
       if (err) throw err;
+      request(app)
+        .post('/User')
+        .send(user)
+        .expect(201)
+        .done();
     });
-
-    request(app)
-      .post('/User')
-      .send(user)
-      .expect(201)
-      .done();
   });
 
   after(function (done) {
